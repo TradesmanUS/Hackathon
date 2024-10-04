@@ -1,0 +1,42 @@
+Receipt:
+  fields:
+    - type: merkle.Receipt
+      marshal-as: reference
+    - name: LocalBlock
+      type: uvarint
+    - name: LocalBlockTime
+      type: time
+    - name: MajorBlock
+      type: uint
+
+LastBlock:
+  fields:
+    - name: Height
+      type: int
+    - name: Time
+      type: time
+    - name: ChainRoot
+      type: hash
+    - name: StateRoot
+      type: hash
+    - name: DirectoryAnchorHeight
+      type: uint
+
+ConsensusPeerInfo:
+  fields:
+    - name: NodeID
+      type: string
+    - name: Host
+      type: string
+    - name: Port
+      type: uint
+
+ServiceAddress:
+  incomparable: true
+  fields:
+    - name: Type
+      type: ServiceType
+      marshal-as-type: uint
+    - name: Argument
+      type: string
+      optional: true

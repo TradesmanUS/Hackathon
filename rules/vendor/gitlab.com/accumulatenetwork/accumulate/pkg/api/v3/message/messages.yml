@@ -1,0 +1,184 @@
+Addressed:
+  union: { type: message, registry: true }
+  fields:
+    - name: Message
+      type: Message
+      marshal-as: union
+      elide-union-methods: true
+    - name: Address
+      type: p2p.Multiaddr
+      marshal-as: union
+
+NodeInfoRequest:
+  union: { type: message }
+  fields:
+    - type: api.NodeInfoOptions
+      marshal-as: reference
+
+FindServiceRequest:
+  union: { type: message }
+  fields:
+    - type: api.FindServiceOptions
+      marshal-as: reference
+
+ConsensusStatusRequest:
+  union: { type: message }
+  fields:
+    - type: api.ConsensusStatusOptions
+      marshal-as: reference
+
+NetworkStatusRequest:
+  union: { type: message }
+  fields:
+    - type: api.NetworkStatusOptions
+      marshal-as: reference
+
+MetricsRequest:
+  union: { type: message }
+  fields:
+    - type: api.MetricsOptions
+      marshal-as: reference
+
+QueryRequest:
+  union: { type: message }
+  fields:
+    - name: Scope
+      type: url
+      pointer: true
+    - name: Query
+      type: api.Query
+      marshal-as: union
+      optional: true
+
+SubmitRequest:
+  union: { type: message }
+  fields:
+    - name: Envelope
+      type: messaging.Envelope
+      marshal-as: reference
+      pointer: true
+    - type: api.SubmitOptions
+      marshal-as: reference
+
+ValidateRequest:
+  union: { type: message }
+  fields:
+    - name: Envelope
+      type: messaging.Envelope
+      marshal-as: reference
+      pointer: true
+    - type: api.ValidateOptions
+      marshal-as: reference
+
+FaucetRequest:
+  union: { type: message }
+  fields:
+    - name: Account
+      type: url
+      pointer: true
+    - type: api.FaucetOptions
+      marshal-as: reference
+
+SubscribeRequest:
+  union: { type: message }
+  fields:
+    - type: api.SubscribeOptions
+      marshal-as: reference
+
+ErrorResponse:
+  union: { type: message }
+  fields:
+    - name: Error
+      type: errors2.Error
+      marshal-as: reference
+      pointer: true
+
+NodeInfoResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.NodeInfo
+      marshal-as: reference
+      pointer: true
+
+FindServiceResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.FindServiceResult
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+      keep-empty: true
+
+ConsensusStatusResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.ConsensusStatus
+      marshal-as: reference
+      pointer: true
+
+NetworkStatusResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.NetworkStatus
+      marshal-as: reference
+      pointer: true
+
+MetricsResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.Metrics
+      marshal-as: reference
+      pointer: true
+
+RecordResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.Record
+      marshal-as: union
+
+SubmitResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.Submission
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+      keep-empty: true
+
+ValidateResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.Submission
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+      keep-empty: true
+
+FaucetResponse:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.Submission
+      marshal-as: reference
+      pointer: true
+
+SubscribeResponse:
+  union: { type: message }
+  fields: ~
+
+EventMessage:
+  union: { type: message }
+  fields:
+    - name: Value
+      type: api.Event
+      marshal-as: union
+      repeatable: true
+      keep-empty: true

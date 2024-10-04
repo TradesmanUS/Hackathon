@@ -1,0 +1,106 @@
+ServiceType:
+  Unknown:
+    description: indicates an unknown service type
+    value: 0
+  Node:
+    description: is the type of [NodeService]
+    value: 1
+  Consensus:
+    description: is the type of [ConsensusService]
+    value: 2
+  Network:
+    description: is the type of [NetworkService]
+    value: 3
+  Metrics:
+    description: is the type of [MetricsService]
+    value: 4
+  Query:
+    description: is the type of [Querier]
+    value: 5
+  Event:
+    description: is the type of [EventService]
+    value: 6
+  Submit:
+    description: is the type of [Submitter]
+    value: 7
+  Validate:
+    description: is the type of [Validator]
+    value: 8
+  Faucet:
+    description: is the type of [Faucet]
+    value: 9
+
+QueryType:
+  Default:
+    value: 0x00
+  Chain:
+    value: 0x01
+  Data:
+    value: 0x02
+  Directory:
+    value: 0x03
+  Pending:
+    value: 0x04
+  Block:
+    value: 0x05
+
+  AnchorSearch:
+    value: 0x10
+  PublicKeySearch:
+    value: 0x11
+  PublicKeyHashSearch:
+    value: 0x12
+  DelegateSearch:
+    value: 0x13
+  MessageHashSearch:
+    value: 0x14
+
+RecordType:
+  Account:
+    value: 0x01
+  Chain:
+    value: 0x02
+  ChainEntry:
+    value: 0x03
+  Key:
+    value: 0x04
+
+  Message:
+    value: 0x10
+  SignatureSet:
+    value: 0x11
+
+  MinorBlock:
+    value: 0x20
+  MajorBlock:
+    value: 0x21
+
+  Range:
+    value: 0x80
+  Url:
+    value: 0x81
+  TxID:
+    value: 0x82
+  IndexEntry:
+    value: 0x83
+  Error:
+    value: 0x8F
+
+EventType:
+  Error:
+    value: 1
+  Block:
+    value: 2
+  Globals:
+    value: 3
+
+KnownPeerStatus:
+  Unknown:
+    name: PeerStatusIsUnknown
+    value: 0
+  Good:
+    name: PeerStatusIsKnownGood
+    value: 1
+  Bad:
+    name: PeerStatusIsKnownBad
+    value: 2

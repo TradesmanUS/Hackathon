@@ -1,0 +1,206 @@
+Envelope:
+  fields:
+    - name: Signatures
+      repeatable: true
+      type: protocol.Signature
+      marshal-as: union
+    - name: TxHash
+      type: bytes
+      optional: true
+    - name: Transaction
+      type: protocol.Transaction
+      marshal-as: reference
+      pointer: true
+      optional: true
+      repeatable: true
+    - name: Messages
+      type: Message
+      marshal-as: union
+      optional: true
+      repeatable: true
+
+TransactionMessage:
+  # DO NOT ADD ANY OTHER FIELDS TO THIS MESSAGE TYPE
+  union: { type: message }
+  fields:
+    - name: Transaction
+      type: protocol.Transaction
+      marshal-as: reference
+      pointer: true
+
+SignatureMessage:
+  # DO NOT ADD ANY OTHER FIELDS TO THIS MESSAGE TYPE
+  union: { type: message }
+  fields:
+    - name: Signature
+      type: protocol.Signature
+      marshal-as: union
+    - name: TxID
+      type: txid
+      pointer: true
+
+SequencedMessage:
+  union: { type: message }
+  fields:
+    - name: Message
+      type: Message
+      marshal-as: union
+    - name: Source
+      description: is the source that produced the transaction
+      type: url
+      pointer: true
+      optional: true
+    - name: Destination
+      description: is the destination that the transaction is sent to
+      type: url
+      pointer: true
+      optional: true
+    - name: Number
+      description: is the sequence number of the transaction
+      type: uint
+      optional: true
+
+# TODO Update synthetic messages to have multiple transactions with a list
+# receipt
+
+SynthFields:
+  description: contains the fields of a synthetic message
+  non-binary: true
+  fields: &synthetic
+    - name: Message
+      type: Message
+      marshal-as: union
+    - name: Signature
+      type: protocol.KeySignature
+      marshal-as: union
+    - name: Proof
+      type: protocol.AnnotatedReceipt
+      marshal-as: reference
+      pointer: true
+
+BadSyntheticMessage:
+  union: { type: message }
+  fields: *synthetic
+
+SyntheticMessage:
+  union: { type: message }
+  fields: *synthetic
+
+BlockAnchor:
+  union: { type: message }
+  fields:
+    - name: Signature
+      type: protocol.KeySignature
+      marshal-as: union
+    - name: Anchor
+      type: Message
+      marshal-as: union
+
+SignatureRequest:
+  union: { type: message }
+  fields:
+    - name: Authority
+      type: url
+      pointer: true
+    - name: TxID
+      type: txid
+      pointer: true
+    - name: Cause
+      type: txid
+      pointer: true
+
+CreditPayment:
+  union: { type: message }
+  fields:
+    - name: Paid
+      type: protocol.Fee
+      marshal-as: enum
+    - name: Payer
+      type: url
+      pointer: true
+    - name: Initiator
+      description: indicates whether the signature initiated the transaction
+      type: bool
+    - name: TxID
+      type: txid
+      pointer: true
+    - name: Cause
+      type: txid
+      pointer: true
+
+BlockSummary:
+  union: { type: message }
+  fields:
+    - name: Partition
+      description: is the ID of the partition of the block
+      type: string
+    - name: Index
+      description: is the index of the block
+      type: uint
+    - name: StateTreeHash
+      description: is the state tree hash after the block
+      type: hash
+    - name: PreviousBlock
+      description: is the index of the previous block (excludes any empty blocks)
+      type: uint
+    - name: RecordUpdates
+      type: RecordUpdate
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+    - name: StateTreeUpdates
+      type: StateTreeUpdate
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+
+NetworkUpdate:
+  union: { type: message }
+  fields:
+    - name: Accounts
+      type: protocol.NetworkAccountUpdate
+      pointer: true
+      marshal-as: reference
+      repeatable: true
+
+MakeMajorBlock:
+  union: { type: message }
+  fields:
+    - name: MajorBlockIndex
+      description: is the major block index
+      type: uint
+    - name: MinorBlockIndex
+      description: is the minor block index
+      type: uvarint
+    - name: MajorBlockTime
+      description: is the timestamp of the major block
+      type: time
+
+DidUpdateExecutorVersion:
+  union: { type: message }
+  fields:
+    - name: Partition
+      type: string
+    - name: Version
+      type: protocol.ExecutorVersion
+      marshal-as: enum
+
+# Components
+
+RecordUpdate:
+  fields:
+    - name: Key
+      type: record.Key
+      marshal-as: reference
+      pointer: true
+    - name: Value
+      type: bytes
+
+StateTreeUpdate:
+  fields:
+    - name: Key
+      type: record.Key
+      marshal-as: reference
+      pointer: true
+    - name: Hash
+      type: hash

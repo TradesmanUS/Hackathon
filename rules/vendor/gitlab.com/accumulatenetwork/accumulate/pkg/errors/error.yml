@@ -1,0 +1,28 @@
+ErrorBase[Status statusType]:
+  fields:
+    - name: Message
+      type: string
+    - name: Code
+      type: Status
+      marshal-as: enum
+    - { name: CodeID, type: uint, virtual: true, non-binary: true }
+    - name: Cause
+      type: { name: ErrorBase, parameters: [{ type: Status }] }
+      marshal-as: reference
+      pointer: true
+    - name: CallStack
+      type: CallSite
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+    - name: Data
+      type: rawJson
+
+CallSite:
+  fields:
+    - name: FuncName
+      type: string
+    - name: File
+      type: string
+    - name: Line
+      type: int

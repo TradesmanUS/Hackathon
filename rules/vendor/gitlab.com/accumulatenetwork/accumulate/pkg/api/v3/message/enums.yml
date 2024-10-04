@@ -1,0 +1,58 @@
+Type:
+  Addressed:
+    value: 0xFF
+
+  NodeInfoRequest:
+    value: 0x01
+  FindServiceRequest:
+    value: 0x02
+  ConsensusStatusRequest:
+    value: 0x03
+  NetworkStatusRequest:
+    value: 0x04
+  MetricsRequest:
+    value: 0x05
+  QueryRequest:
+    value: 0x06
+  SubmitRequest:
+    value: 0x07
+  ValidateRequest:
+    value: 0x08
+  SubscribeRequest:
+    value: 0x09
+  FaucetRequest:
+    value: 0x0A
+
+  ErrorResponse:
+    value: 0x20
+  NodeInfoResponse:
+    value: 0x21
+  FindServiceResponse:
+    value: 0x22
+  ConsensusStatusResponse:
+    value: 0x23
+  NetworkStatusResponse:
+    value: 0x24
+  MetricsResponse:
+    value: 0x25
+  RecordResponse:
+    value: 0x26
+  SubmitResponse:
+    value: 0x27
+  ValidateResponse:
+    value: 0x28
+  SubscribeResponse:
+    value: 0x29
+  FaucetResponse:
+    value: 0x2A
+
+  Event:
+    value: 0x40
+
+  # Private messages. These are not exposed via the standard API and are only
+  # accessible via P2P. They are intended only for communication between nodes.
+
+  PrivateSequenceRequest:
+    value: 0x80
+  PrivateSequenceResponse:
+    value: 0x81

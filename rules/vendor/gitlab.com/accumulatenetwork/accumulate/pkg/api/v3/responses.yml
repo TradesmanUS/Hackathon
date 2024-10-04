@@ -1,0 +1,112 @@
+NodeInfo:
+  fields:
+    - name: PeerID
+      type: p2p.PeerID
+      marshal-as: union
+      zero-value: '""'
+    - name: Network
+      type: string
+    - name: Services
+      type: ServiceAddress
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+    - name: Version
+      type: string
+    - name: Commit
+      type: string
+
+FindServiceResult:
+  fields:
+    - name: PeerID
+      type: p2p.PeerID
+      marshal-as: union
+      zero-value: '""'
+    - name: Status
+      type: KnownPeerStatus
+      marshal-as: enum
+    - name: Addresses
+      type: p2p.Multiaddr
+      marshal-as: union
+      repeatable: true
+
+ConsensusStatus:
+  fields:
+    - name: Ok
+      type: bool
+    - name: LastBlock
+      type: LastBlock
+      marshal-as: reference
+      pointer: true
+    - name: Version
+      type: string
+    - name: Commit
+      type: string
+    - name: NodeKeyHash
+      type: hash
+    - name: ValidatorKeyHash
+      type: hash
+    - name: PartitionID
+      type: string
+    - name: PartitionType
+      type: protocol.PartitionType
+      marshal-as: enum
+    - name: Peers
+      type: ConsensusPeerInfo
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+
+NetworkStatus:
+  fields:
+    - name: Oracle
+      type: protocol.AcmeOracle
+      marshal-as: reference
+      pointer: true
+    - name: Globals
+      type: protocol.NetworkGlobals
+      marshal-as: reference
+      pointer: true
+    - name: Network
+      type: protocol.NetworkDefinition
+      marshal-as: reference
+      pointer: true
+    - name: Routing
+      type: protocol.RoutingTable
+      marshal-as: reference
+      pointer: true
+    - name: ExecutorVersion
+      description: is the active executor version
+      type: protocol.ExecutorVersion
+      marshal-as: enum
+      optional: true
+    - name: DirectoryHeight
+      description: is the height of the directory network
+      type: uint
+    - name: MajorBlockHeight
+      type: uint
+    - name: BvnExecutorVersions
+      description: is the active executor version of each BVN
+      type: protocol.PartitionExecutorVersion
+      marshal-as: reference
+      pointer: true
+      repeatable: true
+
+Metrics:
+  fields:
+    - name: TPS
+      type: float
+      keep-empty: true
+
+Submission:
+  fields:
+    - name: Status
+      type: protocol.TransactionStatus
+      marshal-as: reference
+      pointer: true
+    - name: Success
+      description: indicates whether the envelope was successfully submitted
+      type: bool
+    - name: Message
+      description: is the message returned by the consensus engine
+      type: string
