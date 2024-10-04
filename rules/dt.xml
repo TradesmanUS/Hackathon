@@ -7,7 +7,15 @@
             <POLICY_REFERENCE></POLICY_REFERENCE>
         </attribute_fields>
         <contexts></contexts>
-        <initial_actions></initial_actions>
+        <initial_actions>
+            <initial_action_details>
+                <initial_action_number></initial_action_number>
+                <initial_action_comment></initial_action_comment>
+                <initial_action_requirement></initial_action_requirement>
+                <initial_action_description></initial_action_description>
+                <initial_action_postfix>[] /denialReason xdef</initial_action_postfix>
+            </initial_action_details>
+        </initial_actions>
         <conditions>
             <condition_details>
                 <condition_number>1</condition_number>
@@ -28,6 +36,16 @@
                 <action_description>Deny</action_description>
                 <action_postfix>
                     true /denied xdef
+                </action_postfix>
+                <action_column column_number="1" column_value="X"></action_column>
+            </action_details>
+            <action_details>
+                <action_number>2</action_number>
+                <action_comment></action_comment>
+                <action_requirement></action_requirement>
+                <action_description>Deny reason</action_description>
+                <action_postfix>
+                    denialReason { "Resident of a sanctioned country (" countryCode ")" s+ s+ } execute addTo
                 </action_postfix>
                 <action_column column_number="1" column_value="X"></action_column>
             </action_details>

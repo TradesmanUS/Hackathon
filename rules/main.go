@@ -60,7 +60,8 @@ type Request struct {
 }
 
 type Result struct {
-	Denied bool
+	Denied       bool `json:"denied"`
+	DenialReason any `json:"denialReason"`
 }
 
 func run(_ *cobra.Command, args []string) {
@@ -123,11 +124,9 @@ func runOnce(_ *cobra.Command, args []string) {
 
 	client := jsonrpc.NewClient(accumulate.ResolveWellKnownEndpoint(flag.Network, "v3"))
 	r := must1(execute(ctx, client, must1(url.Parse(args[0]))))
-	if r.Denied {
-		fmt.Println("Denied")
-	} else {
-		fmt.Println("Allowed")
-	}
+	enc := json.NewEncoder(os.Stdout)
+	enc.SetIndent("", "  ")
+	must(enc.Encode(r))
 }
 
 func execute(ctx context.Context, client api.Querier, acctUrl *url.URL) (*Result, error) {
@@ -176,7 +175,8 @@ func execute(ctx context.Context, client api.Querier, acctUrl *url.URL) (*Result
 	}
 
 	return &Result{
-		Denied: getFieldAs(s, result, "denied", vm.AsBool),
+		Denied:       getFieldAs(s, result, "denied", vm.AsBool),
+		DenialReason: getFieldAs(s, result, "denialReason", vm.AsAny),
 	}, nil
 }
 

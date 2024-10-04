@@ -2,8 +2,13 @@
 
 Build with `./rules/build.bash`. Execute once:
 ```shell
-$ ./bin/rules once --network=kermit [data account url]
-Allowed or Denied
+$ ./bin/rules once --network=kermit ethan.acme/data
+{
+  "denied": true,
+  "denialReason": [
+    "Resident of a sanctioned country (RU)"
+  ]
+}
 ```
 
 Run as a server:
@@ -12,10 +17,18 @@ $ ./bin/rules --network=kermit :8080
 Listening on [::]:8080
 
 $ curl localhost:8080 --data-raw '{"metadata": "ethan.acme/metadata"}'
-{"Denied":false}
+{
+  "denied": false,
+  "denialReason": []
+}
 
 $ curl localhost:8080 --data-raw '{"metadata": "ethan.acme/data"}'
-{"Denied":true}
+{
+  "denied": true,
+  "denialReason": [
+    "Resident of a sanctioned country (RU)"
+  ]
+}
 ```
 
 https://kermit.explorer.accumulatenetwork.io/data/ccae12223ca4cb0027cb8da8e3699bc720d2f995153fc0afa212673da8eca9f6@ethan.acme/data

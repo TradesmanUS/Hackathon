@@ -4,5 +4,6 @@
 	</entity>
 	<entity name='result' access='rw' comment=''>
 		<field name='denied' type='boolean' subtype='' access='rw' input='main' default_value='' comment=''></field>
+		<field name='denialReason' type='array' subtype='string' access='rw' input='main' default_value='' comment=''></field>
 	</entity>
 </entity_data_dictionary>
