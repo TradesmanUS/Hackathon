@@ -23,7 +23,6 @@ Problem Statement by:
 
 - To what extent can the solution integrate easily with existing enterprise systems and workflows?
 - To what extent is the design and user flow intuitive for enterprise users
-    - *Remember, participants must be building their projects on the Circle’s products!* 😉
 
 **TECHNICAL IMPLEMENTATION (25%)**
 
@@ -51,9 +50,9 @@ Problem Statement by:
 - In what ways does the solution creatively apply Circle's products to solve the problem?
 - How does the innovation address unmet needs or create new opportunities in the enterprise space?
 
-# Submission Artefacts
+# Submission Artifacts
 
-### **Each team should appoint 1 person as the** ‘Team Representative’ **to submit your project onto t**he submission portal below **before 11:59PM GMT+8, 13 October 2024, Sunday.**
+### **Each team should appoint 1 person as the ** ‘Team Representative’ ** to submit your project onto the submission portal below **before 11:59PM GMT+8, 13 October 2024, Sunday.**
 
 **Project’s GitHub Repository Link**
 
