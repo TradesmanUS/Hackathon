@@ -110,4 +110,13 @@ Here’s a potential structure you can adapt for your pitch deck :
 
 4. Future Roadmap : What plans do you have for your solution post-hackathon ? How will you scale it ?
 
+Demo Link*
+This is the URL to the live working environment of the project the team has developed.
 
+If your team is enhancing an existing project, the Project Demo must showcase the improvements made to the project during the course of the hackathon.
+
+Demo Video Link
+Showcase the technical strengths, usability and performance of your solution here! We strongly advise you to pre-record your demo, upload it to Youtube, and insert the link here.
+
+Pitch Video Link
+We strongly advise you to pre-record your pitch and upload it to Youtube and insert the link here.
