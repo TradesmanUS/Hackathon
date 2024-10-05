@@ -22,7 +22,7 @@ Problem Statement by:
 ***The solution's ability to meet the corporate partner’s needs and standards of enterprise-level implementation.***
 
 - To what extent can the solution integrate easily with existing enterprise systems and workflows?
-- To what extent is the design and user flow intuitive for enterprise users
+- To what extent is the design and user flow intuitive for enterprise users?
 
 **TECHNICAL IMPLEMENTATION (25%):**
 
