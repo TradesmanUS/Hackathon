@@ -24,7 +24,7 @@ Problem Statement by:
 - To what extent can the solution integrate easily with existing enterprise systems and workflows?
 - To what extent is the design and user flow intuitive for enterprise users
 
-**TECHNICAL IMPLEMENTATION (25%)**
+**TECHNICAL IMPLEMENTATION (25%):**
 
 ***The quality, efficiency, and robustness of the technical solution, with a focus on the use of Circle's products.***
 
@@ -32,17 +32,23 @@ Problem Statement by:
 - What measures are in place to ensure the reliability and performance of the solution?
 - How well does the technical architecture support the intended functionality and future enhancements?
 
+**PRESENTATION AND DOCUMENTATION (10%):**
+
 ***The clarity and comprehensiveness of the project's presentation, including supporting documentation.***
 
 - How clearly and convincingly is the solution presented to potential enterprise clients?
 - How well-documented is the solution for both technical implementation and user guidance?
 - How effectively does the presentation communicate the solution's value proposition and competitive advantage?
 
+**SCALABILITY AND MARKET POTENTIAL (20%):**
+
 ***The capacity for the solution to grow and adapt to increasing demands, coupled with its viability in the target market.***
 
 - How well can the solution scale to accommodate growing user bases and transaction volumes?
 - What is the potential market size for this solution, and how does it address a significant market need?
 - How does the business model ensure long-term sustainability and growth?
+
+**INNOVATION (20%):**
 
 ***The uniqueness and creativity of the approach in solving the given challenge.***
 
@@ -51,8 +57,6 @@ Problem Statement by:
 - How does the innovation address unmet needs or create new opportunities in the enterprise space?
 
 # Submission Artifacts
-
-### **Each team should appoint 1 person as the ** ‘Team Representative’ ** to submit your project onto the submission portal below **before 11:59PM GMT+8, 13 October 2024, Sunday.**
 
 **Project’s GitHub Repository Link**
 
