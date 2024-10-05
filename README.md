@@ -90,3 +90,24 @@ Here’s a potential structure you can adapt for your pitch deck:
 This is the **URL to the live working environment** of the solution the team has developed.
 
 - If your demo requires an account to be used, please provide the login credentials to a demo account in your Project Details.
+
+Please list down the improvements made to your project during the hackathon period.*
+Kindly include a detailed list of the improvements and progress made during the course of the hackathon (i.e. highlight any new features, optimisations, or problem resolutions your team has implemented).
+
+Project Details*
+Please provide a description that outlines your project's primary purpose, objectives your team aims to achieve, the key features that define your project. Your description should be concise, yet comprehensive enough to convey a clear understanding of your project's core essence and its distinguishing elements.
+
+List of Tech Stack*
+A list of tech stack (solutions, technology infrastructure, technology services, etc.) used by the team to build your project.
+
+Pitch Deck (in PDF)*
+Here’s a potential structure you can adapt for your pitch deck :
+1. Team and Project Introduction 
+
+2. Project Summary : Provide a comprehensive overview of your solution, keeping in mind that the judging criteria will form the basis of judges’ assessment.
+
+3. Demo Video : Showcase the technical strengths, usability and performance of your solution here! We strongly advise you to pre-record your demo, upload it to Youtube, and insert the link in your deck. 
+
+4. Future Roadmap : What plans do you have for your solution post-hackathon ? How will you scale it ?
+
+
