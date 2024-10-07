@@ -141,12 +141,13 @@ func execute(ctx context.Context, client api.Querier, identity *url.URL) (*Resul
 	// Extract the certificate ID
 	idStr, err := getJsonField[string](
 		personalBank,
-		"segements",
-		func(v any) bool { u, _ := getJsonField[string](v, "segmentType"); return u == "data" },
-		"config",
-		"dataItems",
-		func(v any) bool { u, _ := getJsonField[string](v, "target"); return u == "primaryAml" },
-		"certificateUrl")
+		objectField("segements"),
+		findValue("data").For(objectField("segmentType")),
+		objectField("config"),
+		objectField("dataItems"),
+		findValue("primaryAml").For(objectField("target")),
+		objectField("certificateUrl"),
+	)
 	if err != nil {
 		return nil, fmt.Errorf("locate certificate ID: %w", err)
 	}
@@ -168,11 +169,11 @@ func execute(ctx context.Context, client api.Querier, identity *url.URL) (*Resul
 	// Extract the certificate
 	cert, err := getJsonField[map[string]any](
 		certData,
-		"segements",
-		func(v any) bool { u, _ := getJsonField[string](v, "segmentType"); return u == "data" },
-		"config",
-		"dataItems",
-		func(v any) bool { u, _ := getJsonField[string](v, "target"); return u == "main" },
+		objectField("segements"),
+		findValue("data").For(objectField("segmentType")),
+		objectField("config"),
+		objectField("dataItems"),
+		findValue("main").For(objectField("target")),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("locate certificate data: %w", err)

@@ -77,59 +77,100 @@ func mustMarshal(v any) string {
 	return string(b)
 }
 
-func getJsonField[V any](v any, key ...any) (V, error) {
-	if len(key) == 0 {
-		u, ok := v.(V)
-		if !ok {
-			return u, fmt.Errorf("bad type: want %T, got %T", u, v)
-		}
-		return u, nil
+type jQuery interface {
+	Query(any) (any, error)
+	Errorf(err error) error
+}
+
+type objectField string
+
+func (q objectField) Errorf(err error) error { return fmt.Errorf("%s: %w", q, err) }
+
+func (q objectField) Query(v any) (any, error) {
+	x, ok := v.(map[string]any)
+	if !ok {
+		return nil, fmt.Errorf("bad type: want object, got %T", v)
 	}
 
-	switch k := key[0].(type) {
-	case string:
-		x, ok := v.(map[string]any)
-		if !ok {
-			var z V
-			return z, fmt.Errorf("bad type: want object, got %T", v)
-		}
+	v, ok = x[string(q)]
+	if !ok {
+		return nil, fmt.Errorf("%q not found", q)
+	}
+	return v, nil
+}
 
-		v, ok = x[k]
-		if !ok {
-			var z V
-			return z, fmt.Errorf("%q not found", k)
-		}
-
-		u, err := getJsonField[V](v, key[1:]...)
+func findValue[V comparable](target V) arrayPredicate {
+	return arrayPredicate(func(v any) (bool, error) {
+		u, err := getJsonField[V](v)
 		if err != nil {
-			var z V
-			return z, fmt.Errorf("%s: %w", k, err)
+			return false, err
 		}
-		return u, nil
+		return u == target, nil
+	})
+}
 
-	case func(any) bool:
-		x, ok := v.([]any)
-		if !ok {
-			var z V
-			return z, fmt.Errorf("bad type: want array, got %T", v)
-		}
+type arrayPredicate func(any) (bool, error)
 
-		for i, u := range x {
-			if k(u) {
-				w, err := getJsonField[V](u, key[1:]...)
-				if err != nil {
-					var z V
-					return z, fmt.Errorf("[%d]: %w", i, err)
-				}
-				return w, nil
-			}
-		}
+func (q arrayPredicate) Errorf(err error) error { return fmt.Errorf("[?]: %w", err) }
 
-		var z V
-		return z, fmt.Errorf("matching entry not found")
-
-	default:
-		panic("bad key")
+func (q arrayPredicate) Query(v any) (any, error) {
+	x, ok := v.([]any)
+	if !ok {
+		return nil, fmt.Errorf("bad type: want array, got %T", v)
 	}
 
+	for _, u := range x {
+		ok, err := q(u)
+		if err != nil {
+			return nil, err
+		}
+		if ok {
+			return u, nil
+		}
+	}
+
+	return nil, fmt.Errorf("matching entry not found")
+}
+
+func (q arrayPredicate) For(scope ...jQuery) arrayPredicate {
+	return func(v any) (bool, error) {
+		v, err := compoundQuery(scope).Query(v)
+		if err != nil {
+			return false, err
+		}
+		return q(v)
+	}
+}
+
+type compoundQuery []jQuery
+
+func (q compoundQuery) Errorf(err error) error { return err }
+
+func (q compoundQuery) Query(v any) (_ any, err error) {
+	for _, query := range q {
+		v, err = query.Query(v)
+		if err != nil {
+			return nil, err
+		}
+		defer func(q jQuery) {
+			if err != nil {
+				err = q.Errorf(err)
+			}
+		}(query)
+	}
+	return v, nil
+}
+
+func getJsonField[V any](v any, query ...jQuery) (V, error) {
+	v, err := compoundQuery(query).Query(v)
+	if err != nil {
+		var z V
+		return z, err
+	}
+
+	u, ok := v.(V)
+	if !ok {
+		return u, fmt.Errorf("bad type: want %T, got %T", u, v)
+	}
+	return u, nil
 }
