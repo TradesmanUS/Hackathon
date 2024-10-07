@@ -9,19 +9,12 @@
         <contexts></contexts>
         <initial_actions>
             <initial_action_details>
-                <initial_action_number></initial_action_number>
-                <initial_action_comment></initial_action_comment>
-                <initial_action_requirement></initial_action_requirement>
-                <initial_action_description></initial_action_description>
                 <initial_action_postfix>[] /denialReason xdef</initial_action_postfix>
             </initial_action_details>
         </initial_actions>
         <conditions>
             <condition_details>
                 <condition_number>1</condition_number>
-                <condition_comment></condition_comment>
-                <condition_requirement></condition_requirement>
-                <condition_description></condition_description>
                 <condition_postfix>
                     dataOperationType "delete" s==
                 </condition_postfix>
@@ -29,55 +22,58 @@
             </condition_details>
             <condition_details>
                 <condition_number>2</condition_number>
-                <condition_comment></condition_comment>
-                <condition_requirement></condition_requirement>
-                <condition_description></condition_description>
                 <condition_postfix>
                     certificationStatus "failed" s==
                 </condition_postfix>
                 <condition_column column_number="2" column_value="Y"></condition_column>
             </condition_details>
+            <condition_details>
+                <condition_number>3</condition_number>
+                <condition_postfix>
+                    fromDate parseDate getDate dategt
+                </condition_postfix>
+                <condition_column column_number="3" column_value="Y"></condition_column>
+            </condition_details>
+            <condition_details>
+                <condition_number>4</condition_number>
+                <condition_postfix>
+                    toDate parseDate getDate datelt
+                </condition_postfix>
+                <condition_column column_number="4" column_value="Y"></condition_column>
+            </condition_details>
         </conditions>
         <actions>
             <action_details>
                 <action_number>1</action_number>
-                <action_comment></action_comment>
-                <action_requirement></action_requirement>
-                <action_description></action_description>
                 <action_postfix>
                     true /denied xdef
-                </action_postfix>
-                <action_column column_number="1" column_value="X"></action_column>
-            </action_details>
-            <action_details>
-                <action_number>2</action_number>
-                <action_comment></action_comment>
-                <action_requirement></action_requirement>
-                <action_description></action_description>
-                <action_postfix>
                     denialReason "Certificate has been revoked" addTo
                 </action_postfix>
                 <action_column column_number="1" column_value="X"></action_column>
             </action_details>
             <action_details>
-                <action_number>3</action_number>
-                <action_comment></action_comment>
-                <action_requirement></action_requirement>
-                <action_description></action_description>
+                <action_number>2</action_number>
                 <action_postfix>
                     true /denied xdef
+                    denialReason "Certification failed" addTo
                 </action_postfix>
                 <action_column column_number="2" column_value="X"></action_column>
             </action_details>
             <action_details>
-                <action_number>4</action_number>
-                <action_comment></action_comment>
-                <action_requirement></action_requirement>
-                <action_description></action_description>
+                <action_number>3</action_number>
                 <action_postfix>
-                    denialReason "Certification failed" addTo
+                    true /denied xdef
+                    denialReason "Certificate is not yet active" addTo
                 </action_postfix>
-                <action_column column_number="2" column_value="X"></action_column>
+                <action_column column_number="3" column_value="X"></action_column>
+            </action_details>
+            <action_details>
+                <action_number>4</action_number>
+                <action_postfix>
+                    true /denied xdef
+                    denialReason "Certificate has expired" addTo
+                </action_postfix>
+                <action_column column_number="4" column_value="X"></action_column>
             </action_details>
         </actions>
         <policy_statements></policy_statements>

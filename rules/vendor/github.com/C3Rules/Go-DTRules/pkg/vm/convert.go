@@ -25,6 +25,8 @@ func AsValue(v any) (Value, error) {
 			}
 		}
 		return &u, nil
+	case time.Time:
+		return datetime(v), nil
 	case string:
 		return LiteralString(v), nil
 	case bool:

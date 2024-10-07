@@ -181,7 +181,12 @@ func execute(ctx context.Context, client api.Querier, identity *url.URL) (*Resul
 	s := vm.New()
 	s.SetContext(ctx)
 	result := entities["result"].New("result")
-	must(s.Entity().Push(tables, &jEntity{"certificate", cert}, result))
+	must(s.Entity().Push(
+		tables,
+		result,
+		ops{},
+		&jEntity{"certificate", cert},
+	))
 
 	err = vm.ExecuteString(s, "ValidateCertificate")
 	if err != nil {

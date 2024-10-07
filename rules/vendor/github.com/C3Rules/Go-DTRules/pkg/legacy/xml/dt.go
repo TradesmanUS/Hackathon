@@ -84,14 +84,14 @@ func (x *DecisionTable) Compile() (vm.Value, error) {
 
 	// Compile statements
 	var err error
-	for _, x := range x.InitialActions {
-		t.Before = append(t.Before, tryCompile(&err, x.Postfix))
+	for i, x := range x.InitialActions {
+		t.Before = append(t.Before, tryCompile(&err, x.Postfix, "initial action %d", i))
 	}
-	for _, x := range x.Conditions {
-		t.Conditions = append(t.Conditions, tryCompile(&err, x.Postfix))
+	for i, x := range x.Conditions {
+		t.Conditions = append(t.Conditions, tryCompile(&err, x.Postfix, "condition %d", i))
 	}
-	for _, x := range x.Actions {
-		t.Actions = append(t.Actions, tryCompile(&err, x.Postfix))
+	for i, x := range x.Actions {
+		t.Actions = append(t.Actions, tryCompile(&err, x.Postfix, "action %d", i))
 	}
 
 	// Compile context
@@ -100,7 +100,7 @@ func (x *DecisionTable) Compile() (vm.Value, error) {
 		v = &vm.ExecutableArray{v}
 	}
 	for i := len(x.Contexts) - 1; i >= 0; i-- {
-		switch u := tryCompile(&err, x.Contexts[i].Postfix).(type) {
+		switch u := tryCompile(&err, x.Contexts[i].Postfix, "context %d", i).(type) {
 		case vm.Array:
 			w := vm.ExecutableArray{v}
 			for i, n := 0, u.Len(); i < n; i++ {
@@ -110,6 +110,9 @@ func (x *DecisionTable) Compile() (vm.Value, error) {
 		default:
 			v = &vm.ExecutableArray{v, u}
 		}
+	}
+	if err != nil {
+		return nil, err
 	}
 
 	// Build cases
@@ -159,16 +162,21 @@ func (x *DecisionTable) Compile() (vm.Value, error) {
 	return &vm.Named{Name: x.TableName, Value: v}, nil
 }
 
-func tryCompile(err *error, src string) vm.Value {
+func tryCompile(err *error, src, context string, args ...any) vm.Value {
 	if *err != nil {
 		return nil
 	}
 	var v vm.Value
 	v, *err = vm.CompileString(src)
 	if *err != nil {
+		*err = fmt.Errorf("%s: compile string: %w", fmt.Sprintf(context, args...), *err)
 		return nil
 	}
 	v, *err = vm.AsExecutable(v)
+	if *err != nil {
+		*err = fmt.Errorf("%s: as executable: %w", fmt.Sprintf(context, args...), *err)
+		return nil
+	}
 	return v
 }
 
