@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"embed"
+	"encoding/hex"
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
@@ -12,6 +13,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"time"
 
 	"github.com/C3Rules/Go-DTRules/pkg/dt"
@@ -56,12 +58,12 @@ var entities = must1(loadAnd("edd.xml", lxml.EDD.Compile))
 var tables = must1(loadAnd("dt.xml", lxml.DT.Compile))
 
 type Request struct {
-	Metadata *url.URL
+	Identity *url.URL
 }
 
 type Result struct {
 	Denied       bool `json:"denied"`
-	DenialReason any `json:"denialReason"`
+	DenialReason any  `json:"denialReason"`
 }
 
 func run(_ *cobra.Command, args []string) {
@@ -82,12 +84,12 @@ func run(_ *cobra.Command, args []string) {
 			goto error
 		}
 
-		if req.Metadata == nil {
+		if req.Identity == nil {
 			err = fmt.Errorf("missing metadata URL")
 			goto error
 		}
 
-		res, err = execute(r.Context(), client, req.Metadata)
+		res, err = execute(r.Context(), client, req.Identity)
 		if err != nil {
 			goto error
 		}
@@ -129,47 +131,59 @@ func runOnce(_ *cobra.Command, args []string) {
 	must(enc.Encode(r))
 }
 
-func execute(ctx context.Context, client api.Querier, acctUrl *url.URL) (*Result, error) {
-	// Get the latest entry for the account
-	Q := api.Querier2{Querier: client}
-	r, err := Q.QueryDataEntry(ctx, acctUrl, &api.DataQuery{})
+func execute(ctx context.Context, client api.Querier, identity *url.URL) (*Result, error) {
+	// Get the latest entry for the identity's metadata
+	personalBank, err := fetchDataAs[any](ctx, client, identity.JoinPath("discoveryV1ClientDefault_personalbank", "Info_V1"), &api.DataQuery{})
 	if err != nil {
-		return nil, fmt.Errorf("fetch latest entry for %s: %w", acctUrl, err)
+		return nil, fmt.Errorf("fetch personal bank metadata: %w", err)
 	}
 
-	var entry [][]byte
-	switch body := r.Value.Message.Transaction.Body.(type) {
-	case *protocol.WriteData:
-		entry = body.Entry.GetData()
-	case *protocol.SyntheticWriteData:
-		entry = body.Entry.GetData()
-	default:
-		b, _ := json.Marshal(body)
-		panic(fmt.Errorf("not a data transaction: %s", b))
-	}
-
-	if len(entry) == 0 {
-		return nil, fmt.Errorf("latest entry is empty")
-	}
-
-	var userData struct {
-		CountryCode string
-	}
-	err = json.Unmarshal(entry[0], &userData)
+	// Extract the certificate ID
+	idStr, err := getJsonField[string](
+		personalBank,
+		"segements",
+		func(v any) bool { u, _ := getJsonField[string](v, "segmentType"); return u == "data" },
+		"config",
+		"dataItems",
+		func(v any) bool { u, _ := getJsonField[string](v, "target"); return u == "primaryAml" },
+		"certificateUrl")
 	if err != nil {
-		return nil, fmt.Errorf("cannot decode entry: %w", err)
+		return nil, fmt.Errorf("locate certificate ID: %w", err)
+	}
+	idStr = strings.TrimPrefix(idStr, "acc://")
+	idBytes, err := hex.DecodeString(idStr)
+	if err != nil {
+		return nil, fmt.Errorf("invalid certificate ID: %w", err)
+	}
+	if len(idBytes) != 32 {
+		return nil, fmt.Errorf("invalid certificate ID: want 32 bytes, got %d", len(idBytes))
 	}
 
-	user := entities["user"].New("user")
-	must(user.Set("countryCode", userData.CountryCode))
+	// Find the certificate entry
+	certData, err := fetchDataAs[any](ctx, client, protocol.UnknownUrl(), &api.MessageHashSearchQuery{Hash: [32]byte(idBytes)})
+	if err != nil {
+		return nil, fmt.Errorf("fetch certificate: %w", err)
+	}
 
-	result := entities["result"].New("result")
+	// Extract the certificate
+	cert, err := getJsonField[map[string]any](
+		certData,
+		"segements",
+		func(v any) bool { u, _ := getJsonField[string](v, "segmentType"); return u == "data" },
+		"config",
+		"dataItems",
+		func(v any) bool { u, _ := getJsonField[string](v, "target"); return u == "main" },
+	)
+	if err != nil {
+		return nil, fmt.Errorf("locate certificate data: %w", err)
+	}
 
 	s := vm.New()
 	s.SetContext(ctx)
-	must(s.Entity().Push(tables, user, result))
+	result := entities["result"].New("result")
+	must(s.Entity().Push(tables, &jEntity{"certificate", cert}, result))
 
-	err = vm.ExecuteString(s, "ValidateUser")
+	err = vm.ExecuteString(s, "ValidateCertificate")
 	if err != nil {
 		return nil, err
 	}
@@ -207,6 +221,52 @@ func loadAnd[V, U any](filename string, and func(V) (U, error)) (U, error) {
 	}
 
 	return and(v)
+}
+
+func fetchDataAs[V any](ctx context.Context, client api.Querier, account *url.URL, query api.Query) (V, error) {
+	Q := api.Querier2{Querier: client}
+
+	var txn *protocol.Transaction
+	switch query := query.(type) {
+	case *api.DataQuery:
+		r, err := Q.QueryDataEntry(ctx, account, &api.DataQuery{})
+		if err != nil {
+			var z V
+			return z, err
+		}
+		txn = r.Value.Message.Transaction
+
+	case *api.MessageHashSearchQuery:
+		r, err := Q.QueryTransaction(ctx, account.WithTxID(query.Hash), nil)
+		if err != nil {
+			var z V
+			return z, err
+		}
+		txn = r.Message.Transaction
+	}
+
+	var entry [][]byte
+	switch body := txn.Body.(type) {
+	case *protocol.WriteData:
+		entry = body.Entry.GetData()
+	case *protocol.SyntheticWriteData:
+		entry = body.Entry.GetData()
+	default:
+		var z V
+		return z, fmt.Errorf("invalid transaction: want data, got %v", body.Type())
+	}
+
+	if len(entry) == 0 {
+		var z V
+		return z, fmt.Errorf("latest entry is empty")
+	}
+
+	var v V
+	err := json.Unmarshal(entry[0], &v)
+	if err != nil {
+		return v, fmt.Errorf("cannot decode entry: %w", err)
+	}
+	return v, nil
 }
 
 func must(err error) {

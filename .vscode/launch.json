@@ -10,7 +10,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/rules",
-            "args": ["once", "-n=kermit", "ethan.acme/data"]
+            "args": ["once", "-n=kermit", "FrankRagnok.acme"]
         }
     ]
 }

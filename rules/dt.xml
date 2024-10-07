@@ -1,6 +1,6 @@
 <decision_tables>
     <decision_table>
-        <table_name>ValidateUser</table_name>
+        <table_name>ValidateCertificate</table_name>
         <attribute_fields>
             <TYPE>FIRST</TYPE>
             <COMMENTS></COMMENTS>
@@ -21,11 +21,21 @@
                 <condition_number>1</condition_number>
                 <condition_comment></condition_comment>
                 <condition_requirement></condition_requirement>
-                <condition_description>Is the user a resident of a sanctioned country?</condition_description>
+                <condition_description></condition_description>
                 <condition_postfix>
-                    ["RU" "CN"] countryCode memberOf
+                    dataOperationType "delete" s==
                 </condition_postfix>
                 <condition_column column_number="1" column_value="Y"></condition_column>
+            </condition_details>
+            <condition_details>
+                <condition_number>2</condition_number>
+                <condition_comment></condition_comment>
+                <condition_requirement></condition_requirement>
+                <condition_description></condition_description>
+                <condition_postfix>
+                    certificationStatus "failed" s==
+                </condition_postfix>
+                <condition_column column_number="2" column_value="Y"></condition_column>
             </condition_details>
         </conditions>
         <actions>
@@ -33,7 +43,7 @@
                 <action_number>1</action_number>
                 <action_comment></action_comment>
                 <action_requirement></action_requirement>
-                <action_description>Deny</action_description>
+                <action_description></action_description>
                 <action_postfix>
                     true /denied xdef
                 </action_postfix>
@@ -43,11 +53,31 @@
                 <action_number>2</action_number>
                 <action_comment></action_comment>
                 <action_requirement></action_requirement>
-                <action_description>Deny reason</action_description>
+                <action_description></action_description>
                 <action_postfix>
-                    denialReason { "Resident of a sanctioned country (" countryCode ")" s+ s+ } execute addTo
+                    denialReason "Certificate has been revoked" addTo
                 </action_postfix>
                 <action_column column_number="1" column_value="X"></action_column>
+            </action_details>
+            <action_details>
+                <action_number>3</action_number>
+                <action_comment></action_comment>
+                <action_requirement></action_requirement>
+                <action_description></action_description>
+                <action_postfix>
+                    true /denied xdef
+                </action_postfix>
+                <action_column column_number="2" column_value="X"></action_column>
+            </action_details>
+            <action_details>
+                <action_number>4</action_number>
+                <action_comment></action_comment>
+                <action_requirement></action_requirement>
+                <action_description></action_description>
+                <action_postfix>
+                    denialReason "Certification failed" addTo
+                </action_postfix>
+                <action_column column_number="2" column_value="X"></action_column>
             </action_details>
         </actions>
         <policy_statements></policy_statements>
