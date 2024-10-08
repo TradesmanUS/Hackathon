@@ -1,0 +1,11 @@
+Project Description
+
+We present an abstract account implementation that applies complex governance capabilities to 
+USDC tokens.  The accounts are linked to Accumulate blockchain identities.  The extended multisig 
+security model of Accumulate is then extended to the USDC account.  
+
+Account security is controlled by hierarchical keypages with each keypage defining a security model 
+such 2 out of 3 keys which allows for complex governance to be defined and enforced by 
+the blockchain.   Keypages also support custody and other complex use cases.
+
+Accumulate identities will be used to tie accounts of AML as well as a regulatory enforcement rules engine. 
