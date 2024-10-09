@@ -1,33 +1,4 @@
-# AML Rules Executor
-
-Build with `./rules/build.bash`. Execute once:
-```shell
-$ ./bin/rules once --network=kermit FrankRagnok.acme
-{
-  "denied": true,
-  "denialReason": [
-    "Certification failed"
-  ]
-}
-```
-
-Run as a server:
-```shell
-$ ./bin/rules --network=kermit :8080
-Listening on [::]:8080
-
-$ curl localhost:8080 --data-raw '{"identity": "FrankRagnok.acme"}'
-{
-  "denied": true,
-  "denialReason": [
-    "Certification failed"
-  ]
-}
-```
-
-Call directly:
-```go
-package main
+package rules_test
 
 import (
 	"context"
@@ -35,10 +6,12 @@ import (
 	"fmt"
 
 	"github.com/TradesmanUS/LV8RLABS/rules/pkg/rules"
+	"gitlab.com/accumulatenetwork/accumulate/pkg/accumulate"
+	"gitlab.com/accumulatenetwork/accumulate/pkg/api/v3/jsonrpc"
 	"gitlab.com/accumulatenetwork/accumulate/pkg/url"
 )
 
-func main() {
+func ExampleExecuteWithEndpoint() {
 	client := jsonrpc.NewClient(accumulate.ResolveWellKnownEndpoint("kermit", "v3"))
 	res, err := rules.Execute(context.Background(), client, &rules.Request{
 		Identity: url.MustParse("FrankRagnok.acme"),
@@ -61,4 +34,3 @@ func main() {
 	// }
 	fmt.Println(string(b))
 }
-```
