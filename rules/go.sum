@@ -21,6 +21,8 @@ github.com/BurntSushi/toml v1.3.2 h1:o7IhLm0Msx3BaB+n3Ag7L8EVlByGnpq14C4YWiu/gL8
 github.com/BurntSushi/toml v1.3.2/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
 github.com/C3Rules/Go-DTRules v0.0.0-20241007172757-98ef414aa24f h1:+r0NfW5w8shugp+njLIqTa8IFMsDbh9ae5ZDHy0C308=
 github.com/C3Rules/Go-DTRules v0.0.0-20241007172757-98ef414aa24f/go.mod h1:PazaUA54F7tPQeBDSGhNCzPJnG9JRCd4NRipwT3bdyw=
+github.com/C3Rules/Go-DTRules v0.0.0-20241009164125-96ddf61c59be h1:4htuhabhZU4jnbsmjYObX1y9QmmY5kj1gauSLVlE6hw=
+github.com/C3Rules/Go-DTRules v0.0.0-20241009164125-96ddf61c59be/go.mod h1:PazaUA54F7tPQeBDSGhNCzPJnG9JRCd4NRipwT3bdyw=
 github.com/Djarvur/go-err113 v0.0.0-20210108212216-aea10b59be24 h1:sHglBQTwgx+rWPdisA5ynNEsoARbiCBOyGcJM4/OzsM=
 github.com/Djarvur/go-err113 v0.0.0-20210108212216-aea10b59be24/go.mod h1:4UJr5HIiMZrwgkSPdsjy2uOQExX/WEILpIrO9UPGuXs=
 github.com/FactomProject/basen v0.0.0-20150613233007-fe3947df716e h1:ahyvB3q25YnZWly5Gq1ekg6jcmWaGj/vG/MhF4aisoc=

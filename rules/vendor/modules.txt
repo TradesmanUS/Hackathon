@@ -1,7 +1,7 @@
 # github.com/AccumulateNetwork/jsonrpc2/v15 v15.0.0-20220517212445-953ad957e040
 ## explicit; go 1.13
 github.com/AccumulateNetwork/jsonrpc2/v15
-# github.com/C3Rules/Go-DTRules v0.0.0-20241007172757-98ef414aa24f
+# github.com/C3Rules/Go-DTRules v0.0.0-20241009164125-96ddf61c59be
 ## explicit; go 1.21.1
 github.com/C3Rules/Go-DTRules/pkg/dt
 github.com/C3Rules/Go-DTRules/pkg/legacy/xml

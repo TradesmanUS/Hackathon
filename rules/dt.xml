@@ -30,14 +30,14 @@
             <condition_details>
                 <condition_number>3</condition_number>
                 <condition_postfix>
-                    fromDate parseDate getDate dategt
+                    fromDate newDate getDate dategt
                 </condition_postfix>
                 <condition_column column_number="3" column_value="Y"></condition_column>
             </condition_details>
             <condition_details>
                 <condition_number>4</condition_number>
                 <condition_postfix>
-                    toDate parseDate getDate datelt
+                    toDate newDate getDate datelt
                 </condition_postfix>
                 <condition_column column_number="4" column_value="Y"></condition_column>
             </condition_details>

@@ -185,7 +185,6 @@ func execute(ctx context.Context, client api.Querier, identity *url.URL) (*Resul
 	must(s.Entity().Push(
 		tables,
 		result,
-		ops{},
 		&jEntity{"certificate", cert},
 	))
 

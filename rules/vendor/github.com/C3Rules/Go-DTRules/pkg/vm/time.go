@@ -75,8 +75,31 @@ func resolveDateTimeOperator(name string) (Value, bool) {
 	return nil, false
 }
 
+var supportedDateTimeLayouts = []string{
+	time.DateTime,
+	time.DateOnly,
+
+	// With slashes
+	"2006/01/02",
+	"2006/01/02 15:04:05",
+	"2006/1/2",
+	"2006/1/2 15:04:05",
+
+	// MDY (US-style)
+	"01/02/2006",
+	"01/02/2006 15:04:05",
+	"1/2/2006",
+	"1/2/2006 15:04:05",
+}
+
 func parseDateTime(s string) (time.Time, error) {
-	return time.Parse(time.DateOnly, s)
+	for _, layout := range supportedDateTimeLayouts {
+		t, err := time.Parse(layout, s)
+		if err == nil {
+			return t, nil
+		}
+	}
+	return time.Time{}, fmt.Errorf("%q is not a valid datetime", s)
 }
 
 func formatDuration(v time.Duration) string {
