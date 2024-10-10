@@ -59,7 +59,7 @@ func (null) String() string { return "" }
 
 func ParseValue(src []byte) (Value, error) {
 	n := new(Scanner)
-	n.EvaluateLiteralArrays = false
+	n.EvaluateLiteralArrays = true
 	n.Init(src)
 	var v LiteralArray
 	for {

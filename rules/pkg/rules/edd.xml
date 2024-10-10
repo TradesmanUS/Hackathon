@@ -1,9 +1,6 @@
 <entity_data_dictionary version='2' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
-	<entity name='user' access='r' comment=''>
-		<field name='countryCode' type='string' subtype='' access='r' input='main' default_value='' comment=''></field>
-	</entity>
 	<entity name='result' access='rw' comment=''>
-		<field name='denied' type='boolean' subtype='' access='rw' input='main' default_value='' comment=''></field>
-		<field name='denialReason' type='array' subtype='string' access='rw' input='main' default_value='' comment=''></field>
+		<field name='denied' type='boolean' subtype='' access='rw' input='main' default_value='false' comment=''></field>
+		<field name='denialReason' type='array' subtype='string' access='rw' input='main' default_value='[ ]' comment=''></field>
 	</entity>
 </entity_data_dictionary>

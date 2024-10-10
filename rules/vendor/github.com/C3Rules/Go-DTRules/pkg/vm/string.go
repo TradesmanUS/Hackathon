@@ -60,6 +60,8 @@ var (
 	opSge = binaryOp("s≥", AsString, func(x, y string) Value { return boolean(x >= y) })
 	opSlt = binaryOp("s<", AsString, func(x, y string) Value { return boolean(x < y) })
 	opSle = binaryOp("s≤", AsString, func(x, y string) Value { return boolean(x <= y) })
+
+	opSeqic = binaryOp("sc=", AsString, func(x, y string) Value { return boolean(strings.EqualFold(x, y)) })
 )
 
 func resolveStringOperator(name string) (Value, bool) {
@@ -71,17 +73,19 @@ func resolveStringOperator(name string) (Value, bool) {
 	case "strremove", "s-":
 		return opSsub, true
 
-	case "seq", "s==":
+	case "streq", "s==":
 		return opSeq, true
-	case "sne", "s!=":
+	case "streqignorecase", "sic==":
+		return opSeq, true
+	case "strne", "s!=":
 		return opSne, true
-	case "sgt", "s>":
+	case "strgt", "s>":
 		return opSgt, true
-	case "sge", "s>=":
+	case "strge", "s>=":
 		return opSge, true
-	case "slt", "s<":
+	case "strlt", "s<":
 		return opSlt, true
-	case "sle", "s<=":
+	case "strle", "s<=":
 		return opSle, true
 	}
 	return nil, false

@@ -19,8 +19,8 @@ import (
 //go:embed *.xml
 var files embed.FS
 
-var entities = must1(loadAnd("edd.xml", lxml.EDD.Compile))
-var tables = must1(loadAnd("dt.xml", lxml.DT.Compile))
+var entities = must1(loadAnd("compiled_edd.xml", lxml.EDD.Compile))
+var tables = must1(loadAnd("compiled_dt.xml", lxml.DT.Compile))
 
 type Request struct {
 	Identity *url.URL
@@ -58,7 +58,7 @@ func Execute(ctx context.Context, client api.Querier, req *Request) (*Result, er
 	result := entities["result"].New("result")
 	must(s.Entity().Push(tables, result, cert))
 
-	err = vm.ExecuteString(s, "ValidateCertificate")
+	err = vm.ExecuteString(s, "Validate_Certificate")
 	if err != nil {
 		return nil, err
 	}

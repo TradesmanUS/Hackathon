@@ -1,0 +1,16 @@
+<entity_data_dictionary version='2' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+	<entity name='certificate' access='rw' comment=''>
+		<field name='certificate' type='entity' subtype='' access='r' input='' default_value='' comment='Self Reference'></field>
+		<field name='certificationStatus' type='string' subtype='' access='r' input='' default_value='' comment=''></field>
+		<field name='dataOperationType' type='string' subtype='' access='r' input='' default_value='' comment=''></field>
+		<field name='fromDate' type='string' subtype='' access='r' input='' default_value='' comment=''></field>
+		<field name='mapping*key' type='string' subtype='' access='r' input='' default_value='' comment='Mapping Key'></field>
+		<field name='toDate' type='string' subtype='' access='r' input='' default_value='' comment=''></field>
+	</entity>
+	<entity name='result' access='rw' comment=''>
+		<field name='denialReason' type='array' subtype='string' access='rw' input='' default_value='[]' comment=''></field>
+		<field name='denied' type='boolean' subtype='' access='rw' input='' default_value='false' comment=''></field>
+		<field name='mapping*key' type='string' subtype='' access='r' input='' default_value='' comment='Mapping Key'></field>
+		<field name='result' type='entity' subtype='' access='r' input='' default_value='' comment='Self Reference'></field>
+	</entity>
+</entity_data_dictionary>

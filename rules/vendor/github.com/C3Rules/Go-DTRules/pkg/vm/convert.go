@@ -61,6 +61,9 @@ func AsValue(v any) (Value, error) {
 
 func AsAny(v Value) (any, error) {
 	switch v.Type() {
+	case NullType:
+		return nil, nil
+
 	case NameType:
 		if v, ok := v.(Name); ok {
 			return v.Name(), nil

@@ -3,7 +3,7 @@ module github.com/TradesmanUS/LV8RLABS/rules
 go 1.22.6
 
 require (
-	github.com/C3Rules/Go-DTRules v0.0.0-20241009164125-96ddf61c59be
+	github.com/C3Rules/Go-DTRules v0.0.0-20241010220122-d791cc3e4a5e
 	gitlab.com/accumulatenetwork/accumulate v1.4.0-alpha.1.0.20240930212540-787318059138
 )
 

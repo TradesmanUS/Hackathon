@@ -1,0 +1,85 @@
+<decision_tables>
+<decision_table>
+<table_name>Validate_Certificate</table_name>
+<xls_file>Project_dt.xls</xls_file>
+<attribute_fields>
+<TYPE>FIRST</TYPE>
+<COMMENTS></COMMENTS>
+<POLICY_REFERENCE></POLICY_REFERENCE></attribute_fields>
+<contexts></contexts>
+<initial_actions></initial_actions>
+<conditions>
+<condition_details>
+<condition_number>1</condition_number>
+<condition_comment></condition_comment>
+<condition_requirement></condition_requirement>
+<condition_description>dataOperationType is equal to ignore case &quot;delete&quot;</condition_description>
+<condition_postfix>
+dataOperationType &quot;delete&quot; sic==
+</condition_postfix>
+<condition_column column_number="1" column_value="Y"></condition_column></condition_details>
+<condition_details>
+<condition_number>2</condition_number>
+<condition_comment></condition_comment>
+<condition_requirement></condition_requirement>
+<condition_description>certificationStatus is equal to ignore case &quot;failed&quot;</condition_description>
+<condition_postfix>
+certificationStatus &quot;failed&quot; sic==
+</condition_postfix>
+<condition_column column_number="2" column_value="Y"></condition_column></condition_details>
+<condition_details>
+<condition_number>3</condition_number>
+<condition_comment></condition_comment>
+<condition_requirement></condition_requirement>
+<condition_description>date(fromDate) is greater than the current date</condition_description>
+<condition_postfix>
+fromDate cvd getdate d&gt;
+</condition_postfix>
+<condition_column column_number="3" column_value="Y"></condition_column></condition_details>
+<condition_details>
+<condition_number>4</condition_number>
+<condition_comment></condition_comment>
+<condition_requirement></condition_requirement>
+<condition_description>date(toDate) is less than the current date</condition_description>
+<condition_postfix>
+toDate cvd getdate d&lt;
+</condition_postfix>
+<condition_column column_number="4" column_value="Y"></condition_column></condition_details></conditions>
+<actions>
+<action_details>
+<action_number>1</action_number>
+<action_comment></action_comment>
+<action_requirement></action_requirement>
+<action_description>set denied = true; add &quot;Certificate has been revoked&quot; to denialReason</action_description>
+<action_postfix>
+true cvb /denied xdef  &quot;Certificate has been revoked&quot; denialReason swap addto
+</action_postfix>
+<action_column column_number="1" column_value="X"></action_column></action_details>
+<action_details>
+<action_number>2</action_number>
+<action_comment></action_comment>
+<action_requirement></action_requirement>
+<action_description>set denied = true; add &quot;Certification failed&quot; to denialReason</action_description>
+<action_postfix>
+true cvb /denied xdef  &quot;Certification failed&quot; denialReason swap addto
+</action_postfix>
+<action_column column_number="2" column_value="X"></action_column></action_details>
+<action_details>
+<action_number>3</action_number>
+<action_comment></action_comment>
+<action_requirement></action_requirement>
+<action_description>set denied = true; add &quot;Certificate is not yet active&quot; to denialReason</action_description>
+<action_postfix>
+true cvb /denied xdef  &quot;Certificate is not yet active&quot; denialReason swap addto
+</action_postfix>
+<action_column column_number="3" column_value="X"></action_column></action_details>
+<action_details>
+<action_number>4</action_number>
+<action_comment></action_comment>
+<action_requirement></action_requirement>
+<action_description>set denied = true; add &quot;Certificate has expired&quot; to denialReason</action_description>
+<action_postfix>
+true cvb /denied xdef  &quot;Certificate has expired&quot; denialReason swap addto
+</action_postfix>
+<action_column column_number="4" column_value="X"></action_column></action_details></actions>
+<policy_statements></policy_statements></decision_table></decision_tables>
