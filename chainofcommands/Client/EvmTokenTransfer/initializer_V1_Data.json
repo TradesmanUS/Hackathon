@@ -1,0 +1,155 @@
+﻿{
+  "type": "discovery-metadata",
+  "parentSchema": {
+    "name": "operate.acme",
+    "path": "acc://operate.acme/discoveryV1ClientDefault_dataform",
+    "version": "1"
+  },
+  "schema": {
+    "type": "mixed",
+    "name": "dataform",
+    "version": "1"
+  },
+  "licence": {
+    "key": {
+      "value": "",
+      "version": "1"
+    },
+    "supplier": {
+      "name": "metial.acme",
+      "path": "metial.acme"
+    }
+  },
+  "storage": {
+    "encryption": {
+      "enabled": false
+    },
+    "compression": {
+      "encodeType": "html",
+      "dataFormat": "none",
+      "removeEmptyValues": true
+    }
+  },
+  "status": {
+    "code": "0"
+  },
+  "error": {
+    "code": "0"
+  },
+  "saveSettings": {
+    "events": {
+      "enableBeforeSaveProcess": false,
+      "enableAfterSaveProcess": true
+    },
+    "skipSave": false
+  },
+  "catgory": {
+    "catgoryCode": "0",
+    "subCategoryCode": "",
+    "keywords": "",
+    "meta": "",
+    "typeCode": "",
+    "subTypeCode": ""
+  },
+  "search": {
+    "keywords": ""
+  },
+  "relations": [
+    {
+      "name": "",
+      "relationship": "",
+      "category": ""
+    }
+  ],
+  "segements": [
+    {
+      "version": "1",
+      "recordType": "segment",
+      "segmentType": "presentation",
+      "segementDescription": "",
+      "ref": "operate.acme/discoveryV1/chainofcommands/Provider/EvmTokenTransfer/initializer_V1_Data",
+      "refType": "parent"
+    },
+    {
+      "version": "1",
+      "recordType": "segment",
+      "segmentType": "baseData",
+      "segementDescription": "",
+      "ref": "",
+      "refType": "parent"
+    },
+    {
+      "version": "1",
+      "recordType": "segment",
+      "segmentType": "data",
+      "segementName": "",
+      "segementDescription": "",
+      "type": "data",
+      "ref": "none",
+      "refType": "none",
+      "config": {
+        "dataItems": [
+          {
+            "recordType": "data-item",
+            "target": "main",
+            "name": "main",
+            "commandType": "transfer",
+            "commandSubType": "evmTokenTransfer",
+            "commandCategory": "intra-transfer",
+            "commandClassification": "general",
+            "paramSenderAdiUrl": "",
+            "paramReceipientEvmAddress": "",
+            "paramAmount": "0",
+            "paramEvmTokenAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "paramMemo": ""
+          }
+        ]
+      }
+    },
+    {
+      "version": "1",
+      "recordType": "segment",
+      "segmentType": "process",
+      "segementName": "create_provider_chainofcommands_post_save_operation",
+      "segementDescription": "This will save data to chain of commands.",
+      "ref": "none",
+      "refType": "none",
+      "config": {
+        "processItems": [
+          {
+            "recordType": "process-item",
+            "recordSubType": "execute-transaction-on-accumulate",
+            "processItemClass": "execute_transaction_on_accumulate_process_item",
+            "description": "Wallet is making a data entry",
+            "events": [
+              {
+                "type": "event",
+                "name": "after-execute-process",
+                "category": ""
+              }
+            ],
+            "transactionBody": {
+              "transactionType": "createDataEntryForChainOfCommand",
+              "arg": {
+                "dataAccountUrl": "",
+                "dataAccountUrlInfo": {
+                  "type": "variable",
+                  "variableText": "{@parentAdi}/discoveryV1ClientDefault_chainofcommands/Command_V1",
+                  "varableSourceType": "output"
+                },
+                "dataValueInfo": {
+                  "type": "variable",
+                  "varableSourceType": "template-id",
+                  "variableText": "EvmTokenTransfer_Message"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
+  

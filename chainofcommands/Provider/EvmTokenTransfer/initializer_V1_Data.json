@@ -1,0 +1,236 @@
+{
+  "type": "discovery-metadata",
+  "referenceSchema": {
+    "name": "operate.acme",
+    "path": "acc://operate.acme/discoveryV1ClientDefault_chainofcommands",
+    "version": "1"
+  },
+  "schema": {
+    "type": "presentation",
+    "name": "dataform",
+    "version": "1"  
+  },
+  "licence": {
+    "key": {
+      "value": "",
+      "version": "1"
+    },
+    "supplier": {
+      "name": "operate.acme",
+      "path": "operate.acme"
+    }
+  },
+  "segements": [
+    {
+      "version": "1",
+      "recordType": "segment",
+      "segmentType": "presentation",
+      "segementName": "",
+      "segementDescription": "",
+      "config": {
+        "layout": {
+          "siteHeaderCss": "d-hidden",
+          "siteSubHeaderCss": "d-hidden-old",
+          "siteCss": "d-site-classic-1",
+          "pageType": "master"
+        },
+        "sections": [
+          {
+            "displayInEditorMode": true,
+            "name": "chain-of-command-evm-token-transfer",
+            "sectionType": "custom",
+            "visible": true,
+            "caption": "Chain of Command<div class='d-section-help'>Transfer an asset in any EVM using Account Abstaction method and Accumulate Command Center capability</div>",
+            "target": "main",
+            "panelCss": "d-panel-classic-1 d-section-panel d-chain-of-command-panel chain-of-command-evm-token-transfer",
+            "dataPathForCustomDataProperties": "discovery.data.main.additionalProperties",
+            "enableHeader": true,
+            "enabledFooter": true,
+            "fields": [
+              {
+                "displayInViewMode": false,
+                "editorCaption": "Command",
+                "controlType": "narration",
+                "name": "help-menu help-menu-1",
+                "editorCss": "d-narration-header d-header "
+              },
+              {
+                "controlType": "label",
+                "label": "Command Type",
+                "name": "commandType",
+                "editorCss": "formfield formfield-editor-commandType",
+                "css": "formfield formfield-commandType",
+                "value": "{@discovery.data.main.commandType}"
+              },
+              {
+                "controlType": "label",
+                "label": "Command Sub Type",
+                "name": "commandSubType",
+                "editorCss": "formfield formfield-editor-commandSubType",
+                "css": "formfield formfield-commandSubType",
+                "value": "{@discovery.data.main.commandSubType}"
+              },
+              {
+                "controlType": "label",
+                "label": "Command Category",
+                "name": "commandCategory",
+                "editorCss": "formfield formfield-editor-commandCategory",
+                "css": "formfield formfield-commandCategory",
+                "value": "{@discovery.data.main.commandCategory}"
+              },
+              {
+                "controlType": "label",
+                "label": "Command Classification",
+                "name": "commandClassification",
+                "editorCss": "formfield formfield-editor-commandClassification",
+                "css": "formfield formfield-commandClassification",
+                "value": "{@discovery.data.main.commandClassification}"
+              },
+              {
+                "controlType": "label",
+                "label": "Evm Token Address",
+                "name": "paramEvmTokenAddress",
+                "editorCss": "formfield formfield-editor-paramEvmTokenAddress",
+                "css": "formfield formfield-paramEvmTokenAddress",
+                "value": "{@discovery.data.main.paramEvmTokenAddress}"
+              },
+              {
+                "displayInViewMode": false,
+                "editorCaption": "Parameters",
+                "controlType": "narration",
+                "name": "help-menu help-menu-1",
+                "editorCss": "d-narration-header d-header "
+              },
+              {
+                "controlType": "label",
+                "label": "Sender Adi Url",
+                "name": "paramSenderAdiUrl",
+                "css": "formfield formfield-paramSenderAdiUrl",
+                "value": "{@discovery.data.main.paramSenderAdiUrl}"
+              },
+              {
+                "controlType": "label",
+                "label": "Receipient EVM Address",
+                "name": "paramReceipientEvmAddress",
+                "css": "formfield formfield-paramReceipientEvmAddress",
+                "value": "{@discovery.data.main.paramReceipientEvmAddress}"
+              },
+              {
+                "controlType": "label",
+                "label": "Amount",
+                "name": "paramAmount",
+                "css": "formfield formfield-paramAmount",
+                "value": "{@discovery.data.main.paramAmount}"
+              },
+              {
+                "controlType": "label",
+                "label": "Memo (Optional)",
+                "name": "paramMemo",
+                "css": "formfield formfield-paramMemo",
+                "value": "{@discovery.data.main.paramMemo}"
+              }
+            ]
+          },
+          {
+            "name": "principal-content",
+            "sectionType": "primary",
+            "visible": false,
+            "caption": "Adi",
+            "displayHeader": false,
+            "panelCss": "",
+            "target": "principal-content"
+          },
+          {
+            "name": "list",
+            "sectionType": "list",
+            "visible": true,
+            "caption": "Sub Adis",
+            "target": "list",
+            "panelCss": ""
+          },
+          {
+            "name": "directories",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "sub-adi",
+            "sectionType": "sub-section",
+            "visible": true,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "token-accounts",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "transactions",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "pending-transactions",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "authorities",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "data-accounts",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "authorities",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "keybooks",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          },
+          {
+            "name": "token-issuers",
+            "sectionType": "sub-section",
+            "visible": false,
+            "caption": "",
+            "target": "sub-section",
+            "panelCss": ""
+          }
+        ]
+      }
+    }
+  ]
+}
+

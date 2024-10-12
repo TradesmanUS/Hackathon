@@ -1,0 +1,169 @@
+{
+  "type": "discovery-metadata",
+  "schema": {
+    "type": "process",
+    "name": "provider-initializer",
+    "version": "1"
+  },
+  "segements": [
+    {
+      "version": "1",
+      "recordType": "segment",
+      "segmentType": "rule",
+      "segementName": "process-support-rule",
+      "segementDescription": "These rules will be executed before the transactions are executed.",
+      "ref": "none",
+      "refType": "none",
+      "config": {
+        "ruleItems": [
+          {
+            "ruleItemClass": "confirm_user_permission_rule_item",
+            "executionEnvironment": "wallet",
+            "ruleName": "BatchOperationWarning",
+            "userMessage": "This is a batch operation and it will execute multiple transactions.",
+            "events": [
+              {
+                "type": "event",
+                "name": "before-execute-process"
+              }
+            ]
+          },
+          {
+            "ruleItemClass": "inform_user_permission_rule_item",
+            "executionEnvironment": "wallet",
+            "ruleName": "BatchOperationFinalMessage",
+            "userMessage": "The transaction is successfully completed.",
+            "events": [
+              {
+                "type": "event",
+                "name": "after-execute-process"
+              }
+            ]
+          },
+          {
+            "ruleItemClass": "confirm_user_permission_rule_item",
+            "executionEnvironment": "wallet",
+            "ruleName": "BatchOperationWarning",
+            "userMessage": "This process will setup your data form app.",
+            "events": [
+              {
+                "type": "event",
+                "name": "before-execute-process"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1",
+      "recordType": "segment",
+      "segmentType": "process",
+      "segementName": "create_client_chainofcommands",
+      "segementDescription": "This is a batch of transactions that will be executed as a batch by the wallet.",
+      "ref": "none",
+      "refType": "none",
+      "config": {
+        "processItems": [
+          {
+            "recordType": "process-item",
+            "recordSubType": "execute-transaction-on-accumulate",
+            "processItemClass": "execute_transaction_on_accumulate_process_item",
+            "description": "Wallet is creating your Identity Account",
+            "onFailure": "continue",
+            "waitForCompletion": true,
+            "checkCredit": true,
+            "confirmUser": false,
+            "transactionBody": {
+              "transactionType": "createIdentity",
+              "arg": {
+                "identityUrlInfo": {
+                  "type": "variable",
+                  "varableSourceType": "",
+                  "variableText": "{@parentAdi}",
+                  "keyBookName": "PrimaryBook",
+                  "isRootAdi": true
+                }
+              }
+            }
+          },
+          {
+            "recordType": "process-item",
+            "recordSubType": "execute-transaction-on-accumulate",
+            "processItemClass": "execute_transaction_on_accumulate_process_item",
+            "description": "Wallet is creating your Identity Account",
+            "onFailure": "continue",
+            "waitForCompletion": true,
+            "checkCredit": true,
+            "confirmUser": false,
+            "transactionBody": {
+              "transactionType": "createIdentity",
+              "arg": {
+                "identityUrlInfo": {
+                  "type": "variable",
+                  "varableSourceType": "",
+                  "variableText": "{@parentAdi}/discoveryV1{@purpose}{@bucketName}_chainofcommands"
+                }
+              }
+            }
+          },
+          {
+            "recordType": "process-item",
+            "recordSubType": "execute-transaction-on-accumulate",
+            "processItemClass": "execute_transaction_on_accumulate_process_item",
+            "description": "Wallet is creating your Data Account",
+            "transactionBody": {
+              "transactionType": "createDataAccount",
+              "arg": {
+                "urlInfo": {
+                  "type": "variable",
+                  "variableText": "{@parentAdi}/discoveryV1{@purpose}{@bucketName}_chainofcommands/Info_V1",
+                  "varableSourceType": ""
+                }
+              }
+            }
+          },
+          {
+            "recordType": "process-item",
+            "recordSubType": "execute-transaction-on-accumulate",
+            "processItemClass": "execute_transaction_on_accumulate_process_item",
+            "description": "Wallet is making a data entry",
+            "transactionBody": {
+              "transactionType": "createWebSiteDataEntry",
+              "arg": {
+                "dataAccountUrl": "",
+                "dataAccountUrlInfo": {
+                  "type": "variable",
+                  "variableText": "last-data-account",
+                  "varableSourceType": "output"
+                },
+                "dataValue": "",
+                "dataValueInfo": {
+                  "type": "variable",
+                  "varableSourceType": "data-account",
+                  "variableText": "operate.acme/discoveryV1/chainofcommands/Client/EvmTokenTransfer/initializer_V1_Data"
+                }
+              }
+            }
+          },
+          {
+            "recordType": "process-item",
+            "recordSubType": "execute-transaction-on-accumulate",
+            "processItemClass": "execute_transaction_on_accumulate_process_item",
+            "description": "Wallet is creating your Data Account",
+            "transactionBody": {
+              "transactionType": "createDataAccount",
+              "arg": {
+                "urlInfo": {
+                  "type": "variable",
+                  "variableText": "{@parentAdi}/discoveryV1{@purpose}{@bucketName}_chainofcommands/Command_V1",
+                  "varableSourceType": ""
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
