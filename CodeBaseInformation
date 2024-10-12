@@ -1,0 +1,44 @@
+All the smart contracts are created on Citrea testnet. Citrea is an EVM-compatible Bitcoin-based zkRollup. 
+During the demo or after demo, if Circle want us to move the SmartContracts to a EVM platform that your prefer or promote, we will be glad to do so. 
+
+The Smart contract adresses are provided below.
+
+The wallet will be avilable to be operate from AMLOnChain.com - that is operated by the wallet provide. 
+
+Note: They are always releasing, sometimes the web site is down - contact Jon, if you are unable to test it on the wallet web site.
+
+
+        var settingsMetadata = {
+            projectName: "Citrea_Project10",
+            evmExplorer: "https://explorer.testnet.citrea.xyz",
+            projectRpcUrl: "https://rpc.testnet.citrea.xyz",
+            evmDeploymentAddress: "https://explorer.testnet.citrea.xyz/address/0x8c7FCe0a322a25263AC2941901368F4DeCc7166D",
+            chainLabel: "citrea",
+            chainId: "5115",
+            name:"citrea-testnet",
+            decription: "testnet by citrea. Account Abstraction project Permissions by Accumulate, execution at Citrea",
+            hint: "Execute multiple coordinated transactions using KeyBooks",
+
+            "tag": {
+                "AcmeEntryPoint": "0xC618bc721900094549Ec35191e335B4B84Cf9E21",
+                "AcmeEntryPointImp": "0x09114854D5A86d861430FE7b2997467A30ed8b3c",
+                "Anchor": "0xB6fA9750aeaAa867EDc0991AFf8eA26FAf485D96",
+                "AnchorImp": "0xD3ae70A715001E78685Ec1a4C8099c4b93809E7e",
+                "ProxyAdmin": "0xE18cCb6c85E71169b6D7FA7C76a2bd81ccf126ad",
+                "USDC": "0xE77C4167B2020B73AD10f82aE086BF0D844CF200"
+                 EoaEvmAddress = "0x2dF4FEbedcDabfB6E909Df7A422C57dC3a3966bB";
+            }
+        };
+
+
+AcmeEntryPoint: This is the facade entry point contact. Most of the calls happen there
+USDC: This is a mock USDC coin we created in the testnet
+EoaEvmAddress is the sample Abstract account created for testing prupose. (Alias SimpleAccount);
+
+
+Some information is also available here: https://dev.azure.com/HelpDocs/ChainOfCommand/_wiki/wikis/ChainOfCommand.wiki/549/Introduction
+
+
+
+
+
